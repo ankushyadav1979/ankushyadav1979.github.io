@@ -1,0 +1,949 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ankush Yadav</title>
+<meta name="description" content="Ankush Yadav — software engineer and quant developer. MEng ECE at the University of Waterloo. Low-latency systems, quantitative finance, distributed systems and ML.">
+<meta property="og:title" content="Ankush Yadav — Software Engineer & Quant Developer">
+<meta property="og:description" content="Low-latency systems, quantitative finance, distributed systems and ML. MEng ECE @ University of Waterloo.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231F3FB8'/%3E%3Cpath d='M5 22 L11 16 L15 19 L21 10 L27 13' stroke='white' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Schibsted+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Tokens
+   ============================================================ */
+:root {
+  --paper: #F4F6F9;
+  --surface: #FFFFFF;
+  --ink: #132033;
+  --ink-2: #4A5568;
+  --ink-3: #6B7588;
+  --rule: #DCE1E8;
+  --accent: #1F3FB8;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E6EBFA;
+  --down: #B4461F;
+  --path: rgba(19, 32, 51, 0.13);
+
+  --f-display: "Schibsted Grotesk", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --wrap: 1120px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --section: clamp(72px, 10vw, 128px);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0D1522;
+    --surface: #131D2D;
+    --ink: #E7ECF3;
+    --ink-2: #AEB8C8;
+    --ink-3: #8592A6;
+    --rule: #243248;
+    --accent: #8FA8FF;
+    --accent-ink: #0D1522;
+    --accent-soft: #1A2744;
+    --down: #F08A62;
+    --path: rgba(231, 236, 243, 0.12);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0D1522;
+  --surface: #131D2D;
+  --ink: #E7ECF3;
+  --ink-2: #AEB8C8;
+  --ink-3: #8592A6;
+  --rule: #243248;
+  --accent: #8FA8FF;
+  --accent-ink: #0D1522;
+  --accent-soft: #1A2744;
+  --down: #F08A62;
+  --path: rgba(231, 236, 243, 0.12);
+  color-scheme: dark;
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img, svg, canvas { display: block; max-width: 100%; }
+a { color: inherit; }
+p { margin: 0 0 1em; }
+h1, h2, h3 { font-family: var(--f-display); margin: 0; line-height: 1.1; letter-spacing: -0.02em; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
+.skip { position: absolute; left: -9999px; }
+.skip:focus { left: 16px; top: 16px; z-index: 100; background: var(--surface); padding: 8px 12px; }
+
+/* Placeholders you still need to fill in — search the file for class="todo" */
+.todo {
+  background: repeating-linear-gradient(135deg, transparent 0 6px, color-mix(in srgb, var(--down) 12%, transparent) 6px 12px);
+  outline: 1px dashed var(--down);
+  outline-offset: 1px;
+  border-radius: 3px;
+  padding: 0 4px;
+}
+
+/* ============================================================
+   Nav
+   ============================================================ */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
+  backdrop-filter: saturate(1.4) blur(10px);
+  -webkit-backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .2s;
+}
+.nav.scrolled { border-bottom-color: var(--rule); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+.brand { font-family: var(--f-display); font-weight: 700; font-size: 18px; text-decoration: none; letter-spacing: -0.01em; }
+.brand span { color: var(--accent); }
+.nav ul { list-style: none; display: flex; gap: 4px; margin: 0; padding: 0; }
+.nav ul a {
+  text-decoration: none; font-size: 15px; color: var(--ink-2);
+  padding: 6px 10px; border-radius: 6px;
+}
+.nav ul a:hover, .nav ul a.active { color: var(--ink); background: var(--accent-soft); }
+.nav-right { display: flex; align-items: center; gap: 6px; }
+.icon-btn {
+  width: 38px; height: 38px; display: grid; place-items: center;
+  border: 1px solid var(--rule); border-radius: 8px; background: var(--surface);
+  color: var(--ink); cursor: pointer;
+}
+.icon-btn:hover { border-color: var(--ink-3); }
+.menu-btn { display: none; }
+@media (max-width: 860px) {
+  .nav ul {
+    display: none; position: absolute; top: 64px; left: 0; right: 0;
+    flex-direction: column; background: var(--paper); border-bottom: 1px solid var(--rule);
+    padding: 8px var(--gutter) 16px;
+  }
+  .nav ul.open { display: flex; }
+  .nav ul a { display: block; padding: 10px 8px; font-size: 17px; }
+  .menu-btn { display: grid; }
+}
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero { padding: clamp(40px, 7vw, 88px) 0 var(--section); }
+.hero-grid {
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 64px); align-items: center;
+}
+.hero h1 {
+  font-size: clamp(52px, 8.4vw, 104px);
+  font-weight: 800; letter-spacing: -0.045em; line-height: .92;
+}
+.hero .role {
+  font-family: var(--f-display); font-weight: 600;
+  font-size: clamp(20px, 2.3vw, 26px); letter-spacing: -0.01em;
+  margin: 22px 0 6px; color: var(--ink); line-height: 1.3;
+}
+.hero .role > span:not(.sep) { white-space: nowrap; }
+.hero .role .sep { color: var(--accent); margin: 0 .1em; font-weight: 500; }
+.hero .school { color: var(--ink-3); font-size: 16px; margin: 0 0 22px; }
+.hero .intro { font-size: 19px; color: var(--ink-2); max-width: 34em; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 9px;
+  font: 500 15px/1 var(--f-body); text-decoration: none;
+  padding: 13px 18px; border-radius: 9px; border: 1px solid var(--rule);
+  background: var(--surface); color: var(--ink);
+  transition: border-color .15s, transform .15s;
+}
+.btn:hover { border-color: var(--ink-3); }
+.btn:active { transform: translateY(1px); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn svg { width: 17px; height: 17px; flex: none; }
+
+.chart {
+  position: relative; background: var(--surface);
+  border: 1px solid var(--rule); border-radius: 14px;
+  padding: 18px 18px 14px;
+}
+.chart canvas { width: 100%; height: clamp(260px, 30vw, 360px); }
+.chart figcaption {
+  display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  font-size: 13px; color: var(--ink-3); margin-top: 10px;
+}
+.chart figcaption code { font-family: var(--f-mono); font-size: 12.5px; color: var(--ink-2); }
+.chart .replay {
+  background: none; border: 0; color: var(--accent); font: inherit; cursor: pointer; padding: 0;
+}
+.chart .replay:hover { text-decoration: underline; }
+
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ============================================================
+   Sections
+   ============================================================ */
+section.block { padding: var(--section) 0; border-top: 1px solid var(--rule); }
+.head {
+  display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 32px;
+  margin-bottom: 44px; align-items: baseline;
+}
+.head h2 { font-size: clamp(32px, 4vw, 46px); font-weight: 700; }
+.head p { color: var(--ink-2); max-width: 36em; margin: 0; font-size: 18px; }
+.body-grid { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 32px; }
+@media (max-width: 860px) {
+  .head, .body-grid { grid-template-columns: 1fr; gap: 12px; }
+  .body-grid > .spacer { display: none; }
+}
+
+/* About */
+.about-text { font-size: 19px; max-width: 38em; }
+.about-text p { color: var(--ink-2); }
+.about-text p:first-child { color: var(--ink); font-size: 22px; line-height: 1.5; font-family: var(--f-body); }
+.facts {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 12px;
+  overflow: hidden; margin-top: 36px;
+}
+@media (max-width: 760px) { .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.facts div { background: var(--surface); padding: 18px 20px; }
+.facts dt { font-size: 13.5px; color: var(--ink-3); margin-bottom: 4px; }
+.facts dd { margin: 0; font-weight: 500; }
+.interests { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; padding: 0; list-style: none; }
+.interests li {
+  border: 1px solid var(--rule); background: var(--surface);
+  border-radius: 999px; padding: 6px 14px; font-size: 15px;
+}
+
+/* Experience — a real sequence, so a timeline */
+.timeline { list-style: none; margin: 0; padding: 0; position: relative; }
+.job {
+  display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 32px;
+  padding: 30px 0; border-top: 1px solid var(--rule);
+}
+.job:first-child { border-top: 0; padding-top: 0; }
+.job .when { color: var(--ink-3); font-size: 15px; }
+.job .when .place { display: block; margin-top: 2px; }
+.job h3 { font-size: 23px; font-weight: 700; letter-spacing: -0.015em; }
+.job .org { color: var(--accent); font-weight: 500; margin: 4px 0 14px; }
+.job ul { margin: 0; padding-left: 1.1em; color: var(--ink-2); max-width: 44em; }
+.job li { margin-bottom: 6px; }
+.job li::marker { color: var(--ink-3); }
+.now {
+  display: inline-block; font-size: 12.5px; font-weight: 600; color: var(--accent);
+  background: var(--accent-soft); border-radius: 999px; padding: 2px 9px; margin-left: 8px; vertical-align: 3px;
+}
+@media (max-width: 860px) { .job { grid-template-columns: 1fr; gap: 8px; } }
+
+/* Projects */
+.projects { display: grid; gap: 18px; }
+.project {
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 14px;
+  padding: clamp(22px, 3vw, 34px);
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: clamp(20px, 4vw, 48px);
+}
+.project.feature { border-color: color-mix(in srgb, var(--accent) 45%, var(--rule)); }
+.project h3 { font-size: clamp(24px, 2.6vw, 30px); font-weight: 700; }
+.project .context { color: var(--ink-3); font-size: 15px; margin: 8px 0 16px; }
+.project .summary { color: var(--ink-2); }
+.project .links { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 18px; }
+.project .links a {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-weight: 500; font-size: 15px; color: var(--accent); text-decoration: none;
+}
+.project .links a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.project .links svg { width: 16px; height: 16px; }
+.project .private { font-size: 14px; color: var(--ink-3); }
+.pdl { margin: 0; display: grid; gap: 16px; }
+.pdl dt { font-family: var(--f-display); font-weight: 600; font-size: 15px; color: var(--ink); margin-bottom: 3px; }
+.pdl dd { margin: 0; color: var(--ink-2); font-size: 16px; }
+.pdl .result dd { color: var(--ink); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 0; list-style: none; }
+.tags li {
+  font-family: var(--f-mono); font-size: 13px; color: var(--ink-2);
+  background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; padding: 2px 8px;
+}
+@media (max-width: 860px) { .project { grid-template-columns: 1fr; } }
+
+/* Skills */
+.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 36px 32px; }
+.skills h3 { font-size: 17px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.005em; }
+.skills ul { list-style: none; margin: 0; padding: 0; }
+.skills li { padding: 9px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; gap: 12px; }
+.skills li:last-child { border-bottom: 1px solid var(--rule); }
+.skills li span { color: var(--ink-3); font-size: 14.5px; text-align: right; }
+
+/* Education */
+.edu { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+.edu article { background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 26px 28px; }
+.edu h3 { font-size: 22px; font-weight: 700; }
+.edu .deg { color: var(--accent); font-weight: 500; margin: 6px 0 2px; }
+.edu .yrs { color: var(--ink-3); font-size: 15px; margin-bottom: 14px; }
+.edu .yrs { margin-bottom: 10px; }
+.edu .grade { margin: 0 0 20px; color: var(--ink-2); font-size: 16px; }
+.edu .grade strong { color: var(--ink); font-weight: 600; }
+.edu h4 { font-family: var(--f-display); font-size: 15px; font-weight: 600; margin: 0 0 8px; }
+.courses { list-style: none; margin: 0; padding: 0; font-size: 15.5px; color: var(--ink-2); }
+.courses li { padding: 6px 0; border-top: 1px solid var(--rule); display: flex; gap: 10px; }
+.courses li span { flex: none; min-width: 4.6em; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+
+/* Quant / research — each area carries the equation at its centre */
+.quant { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; }
+.quant article { background: var(--surface); padding: 26px 28px 28px; display: flex; flex-direction: column; }
+.quant h3 { font-size: 20px; font-weight: 700; margin-bottom: 14px; }
+.eq {
+  font-family: "Cambria Math", "STIX Two Math", "Latin Modern Math", Georgia, serif;
+  font-size: 19px; color: var(--ink); line-height: 1.5;
+  padding: 14px 16px; background: var(--paper); border-radius: 8px; margin-bottom: 16px;
+  overflow-x: auto; white-space: nowrap;
+}
+.eq i { font-style: italic; }
+.eq .fr { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; font-size: .9em; }
+.eq .fr > span { padding: 0 4px; line-height: 1.35; }
+.eq .fr > span:first-child { border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+.quant > article > p { max-width: 36em; }
+@media (max-width: 760px) { .quant { grid-template-columns: minmax(0, 1fr); } .eq { font-size: 16px; } }
+.quant p { color: var(--ink-2); font-size: 16px; margin: 0; }
+
+/* Contact */
+.contact-mail {
+  font-family: var(--f-display); font-weight: 700; letter-spacing: -0.03em;
+  font-size: clamp(30px, 5.6vw, 64px); line-height: 1.05; text-decoration: none;
+  display: inline-block; border-bottom: 3px solid var(--accent); padding-bottom: 4px;
+  word-break: break-all;
+}
+.contact-mail:hover { color: var(--accent); }
+.contact-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; }
+
+footer { border-top: 1px solid var(--rule); padding: 28px 0 40px; color: var(--ink-3); font-size: 14.5px; }
+footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+footer a { color: var(--ink-2); }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ============================ NAV ============================ -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">Ankush Yadav<span>.</span></a>
+    <nav aria-label="Sections">
+      <ul id="menu">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#quant">Quant</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" id="theme" aria-label="Switch colour theme" title="Switch theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<!-- ============================ HERO ============================ -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Ankush<br>Yadav</h1>
+      <p class="role"><span>Software Engineer</span> <span class="sep">/</span> <span>Quant Developer</span></p>
+      <p class="school">MEng Electrical &amp; Computer Engineering, University of Waterloo</p>
+      <p class="intro">I build fast, reliable systems for markets and the cloud. I spent nearly three years building trading infrastructure at AlphaGrep Securities and a summer building security automation at AWS. I’m finishing my MEng at Waterloo in December 2026.</p>
+      <div class="actions">
+        <a class="btn primary" href="resume.pdf" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          View resume
+        </a>
+        <a class="btn" href="https://github.com/ankushyadav1979" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+          GitHub
+        </a>
+        <a class="btn" href="https://www.linkedin.com/in/ankushyadav1979" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+
+    <figure class="chart" style="margin:0">
+      <canvas id="gbm" aria-label="Animated chart of simulated geometric Brownian motion price paths" role="img"></canvas>
+      <figcaption>
+        <span>Simulated price paths &nbsp;<code>dS = μS dt + σS dW</code></span>
+        <button class="replay" id="replay" type="button">Resample</button>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============================ ABOUT ============================ -->
+<section class="block" id="about">
+  <div class="wrap">
+    <div class="head">
+      <h2>About</h2>
+    </div>
+    <div class="body-grid">
+      <div class="spacer"></div>
+      <div>
+        <div class="about-text">
+          <p>I’m a software engineer who likes the parts of a system where microseconds and correctness both matter.</p>
+          <p>Before Waterloo I spent nearly three years as a senior software developer at AlphaGrep Securities in Bangalore, building the infrastructure around a high-frequency trading platform: market data ingestion across exchanges from NSE to CME and Binance, position reconciliation, and automation that kept traders trading. This summer I was a software development engineer intern at Amazon Web Services in Toronto, where I built a production security canary that cut detection of security misconfigurations from days to under 30 minutes.</p>
+          <p>I’m now doing an MEng in Electrical &amp; Computer Engineering at the University of Waterloo with a software specialization, graduating in December 2026, and working as a graduate teaching assistant. Alongside coursework I study the maths behind the markets — probability, stochastic calculus and econometrics — and build tools to test ideas against data.</p>
+        </div>
+        <dl class="facts">
+          <div><dt>Studying</dt><dd>MEng ECE (Software), Waterloo</dd></div>
+          <div><dt>Graduating</dt><dd>December 2026</dd></div>
+          <div><dt>Industry</dt><dd>HFT (AlphaGrep), AWS</dd></div>
+          <div><dt>Based in</dt><dd>Waterloo, Ontario</dd></div>
+        </dl>
+        <ul class="interests" aria-label="Interests">
+          <li>Low-latency systems</li>
+          <li>Quantitative finance</li>
+          <li>Distributed systems</li>
+          <li>AI / ML</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ EXPERIENCE ============================ -->
+<section class="block" id="experience">
+  <div class="wrap">
+    <div class="head">
+      <h2>Experience</h2>
+      <p>Trading infrastructure, cloud security, teaching and the web.</p>
+    </div>
+    <ol class="timeline" reversed>
+      <li class="job">
+        <div class="when">Sep 2026 – present<span class="place">Waterloo, ON</span></div>
+        <div>
+          <h3>Graduate Teaching Assistant <span class="now">Current</span></h3>
+          <p class="org">University of Waterloo</p>
+          <ul>
+            <li>TA for ECE 606, a graduate course in the Department of Electrical &amp; Computer Engineering.</li>
+            <li>Evaluate student assignments, including Python programming submissions, and give written feedback on correctness and approach.</li>
+          </ul>
+        </div>
+      </li>
+      <li class="job">
+        <div class="when">May 2026 – Aug 2026<span class="place">Toronto, ON</span></div>
+        <div>
+          <h3>Software Development Engineer Intern</h3>
+          <p class="org">Amazon Web Services (AWS)</p>
+          <ul>
+            <li>Built a production security canary that creates fresh database instances every 30 minutes, runs signed verification scripts on live hosts over a zero-trust transport layer, and raises incidents automatically on failure, cutting detection time for security misconfigurations from days to under 30 minutes.</li>
+            <li>Engineered a fault-tolerant dual-path architecture with cryptographic multi-party authorization, automatic failover, retry with backoff and session re-initialisation, delivering 100% verification uptime with zero operator intervention.</li>
+            <li>Shipped 5 packages, 2 pipelines and full observability (8 alarms, a real-time dashboard, auto-ticketing) across a multi-account AWS environment using Java, TypeScript, CDK, CloudWatch, Fargate and IAM.</li>
+            <li>Designed for extensibility: new database engine teams onboard to continuous security monitoring with 2 configuration changes and no new code, infrastructure or pipelines.</li>
+            <li>Built a chaos fuzz-testing harness that subjects hosts to destructive mutations (failover, reboot, network reconfiguration) and re-verifies that every security invariant survives.</li>
+          </ul>
+        </div>
+      </li>
+      <li class="job">
+        <div class="when">Aug 2023 – Apr 2026<span class="place">Bangalore, India</span></div>
+        <div>
+          <h3>Senior Software Developer</h3>
+          <p class="org">AlphaGrep Securities</p>
+          <ul>
+            <li>Built a config-driven market data ingestion tool for futures, options, equities, crypto and FX across NSE, BSE, US, CME, KRX, Binance and Chinese exchanges, with incremental reruns that fetch only missing data, and a C++ binary that loads market data into MySQL for the MFT trading infrastructure.</li>
+            <li>Worked on the firm’s strategy framework, which runs the same strategy code in backtest and live trading, with P&amp;L, cost, margin and shock-risk accounting, options Greeks and synthetic futures.</li>
+            <li>Built a daily options Greeks and implied volatility pipeline covering NSE, BSE, US and CME options, with an automated top-20 turnover report that cross-checks data against an independent source.</li>
+            <li>Built a Stats Generator: a plug-in framework that computes daily notional, return volatility, volume, spread-to-volatility and options Greeks for instruments across NSE, KRX, US equities and crypto.</li>
+            <li>Built a Sanity Tool that checks each day’s market data for missing files and incomplete bars across exchanges, and keeps an exact re-download list.</li>
+            <li>Developed an application that aligns database positions with live trading data, reducing expired-symbol errors by 29% and improving data processing speed by 37%.</li>
+            <li>Built a Python process monitoring system that alerts trading desks on Slack within a minute when a production process crashes, goes missing or is duplicated, with its logs attached.</li>
+            <li>Built applications that automate key trading tasks, reducing trader downtime by 11% and increasing trade execution speed by 15%.</li>
+            <li>Automated Linux infrastructure with Python, reducing manual tasks by 24% and improving operational efficiency by 16%.</li>
+            <li>Designed MySQL database solutions that improved storage and retrieval times by 22%.</li>
+          </ul>
+        </div>
+      </li>
+      <li class="job">
+        <div class="when">Jul 2022 – Sep 2022<span class="place">Jaipur, India</span></div>
+        <div>
+          <h3>Web Developer Intern</h3>
+          <p class="org">Vision Freight Solutions India Private Limited</p>
+          <ul>
+            <li>Led the development and debugging of assigned projects, delivering high-quality software solutions on time and reducing bug-related issues by 16%.</li>
+            <li>Engineered a dynamic website project, integrating content with a MySQL database, reducing data retrieval times by 18% and enhancing presentation performance.</li>
+            <li>Designed and implemented a secure user login system, increasing system integrity by 24% and strengthening cybersecurity by ensuring only valid credentials are granted access.</li>
+          </ul>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================ PROJECTS ============================ -->
+<section class="block" id="projects">
+  <div class="wrap">
+    <div class="head">
+      <h2>Projects</h2>
+      <p>Systems I’ve designed and built, from cloud security automation and options analytics to trading infrastructure and full-stack apps.</p>
+    </div>
+
+    <div class="projects">
+      <!-- Project: copy one <article class="project"> block to add another -->
+      <article class="project feature">
+        <div>
+          <h3>Continuous Security Canary</h3>
+          <p class="context">Built at Amazon Web Services, 2026</p>
+          <p class="summary">Always-on verification that database hosts stay securely configured, running in production.</p>
+          <div class="links"><span class="private">Proprietary — code not public</span></div>
+        </div>
+        <dl class="pdl">
+          <div><dt>Problem</dt><dd>Security misconfigurations on database hosts could go unnoticed for days, and a check that only runs occasionally, or fails silently, gives false confidence.</dd></div>
+          <div><dt>Approach</dt><dd>Every 30 minutes the canary creates fresh database instances and runs signed verification scripts on live hosts over a zero-trust transport. Two independent paths with cryptographic multi-party authorization, failover and retry keep it running, and a chaos fuzz-testing harness checks that the security invariants hold after failover, reboots and network changes.</dd></div>
+          <div><dt>Technologies</dt><dd><ul class="tags"><li>Java</li><li>TypeScript</li><li>AWS CDK</li><li>Fargate</li><li>CloudWatch</li><li>IAM</li></ul></dd></div>
+          <div class="result"><dt>Results</dt><dd>Detection time cut from days to under 30 minutes, with 100% verification uptime and no operator intervention. New database engine teams onboard with 2 configuration changes.</dd></div>
+        </dl>
+      </article>
+      <article class="project">
+        <div>
+          <h3>Strategy Research &amp; Execution Framework</h3>
+          <p class="context">AlphaGrep Securities, core team framework</p>
+          <p class="summary">The base layer that mid-frequency trading strategies are built on, where the same strategy code runs in backtests and in live trading.</p>
+          <div class="links"><span class="private">Proprietary — code not public</span></div>
+        </div>
+        <dl class="pdl">
+          <div><dt>Problem</dt><dd>When research backtests and production run on different code, results diverge the moment a strategy goes live. Every strategy also has to deal with the same hard details: lot sizes, expiries, corporate actions, costs, margin and restarts.</dd></div>
+          <div><dt>Approach</dt><dd>Strategies subclass one event-driven base class (day start, bar updates across multiple bar sizes, fills, day end) and only express target positions and price limits. In a backtest, the framework replays stored market data and writes timestamped target files, with configurable latency, for an execution simulator. Live, it reads bars from the database, writes targets for execution, and saves its state so it can restart safely. Per-instrument accounting covers P&amp;L, commissions, slippage models, dividends, currency conversion and inverse contracts. The framework closes expired contracts, applies splits, bonuses and name changes, and respects trading hours for each symbol. It tracks exchange margin and stress-tests the book under 8 spot and volatility shock scenarios of up to ±15%. For options, it computes Greeks and attributes P&amp;L to them, builds synthetic futures from call–put pairs chosen within a delta band (rolling to new strikes when delta drifts), and nets offsetting legs of multi-leg positions. Runs report net P&amp;L, Sharpe, day-win rate, maximum drawdown and recovery time, P&amp;L per turnover in basis points, and intraday versus overnight splits by year and product type. A launcher runs end-to-end live tests with a state-machine test strategy.</dd></div>
+          <div><dt>Technologies</dt><dd><ul class="tags"><li>Python</li><li>pandas</li><li>NumPy</li><li>MySQL</li><li>Black–Scholes</li><li>pyfolio</li></ul></dd></div>
+          <div class="result"><dt>Results</dt><dd>One codebase from research to production: a strategy that passes its backtest runs live unchanged, with P&amp;L, costs, margin and risk measured the same way in both.</dd></div>
+        </dl>
+      </article>
+      <article class="project">
+        <div>
+          <h3>Options Greeks &amp; Implied Volatility</h3>
+          <p class="context">Built at AlphaGrep Securities</p>
+          <p class="summary">Daily delta, gamma, theta, vega and implied volatility for every listed option across Indian, US and CME markets.</p>
+          <div class="links"><span class="private">Proprietary — code not public</span></div>
+        </div>
+        <dl class="pdl">
+          <div><dt>Problem</dt><dd>Traders and researchers needed a consistent, daily view of implied volatility and risk across thousands of option contracts on NSE, BSE, US equity and index options (including SPX, NDX and RUT) and CME E-mini S&amp;P options, each with its own symbology, sessions and time zones.</dd></div>
+          <div><dt>Approach</dt><dd>Joins exchange reference data, quotes and bars for the whole option chain, then prices each contract from the average mid-quote over the first 15 minutes of trading against the underlying’s open. Time to expiry is computed to the second across exchange time zones, with the risk-free rate taken from a dated rate series, and implied volatility is solved numerically before computing the Greeks. A daily report ranks the top 20 underlyings by options turnover with their at-the-money IV and cross-checks turnover and volume against an independent market data source, flagging mismatches.</dd></div>
+          <div><dt>Technologies</dt><dd><ul class="tags"><li>Python</li><li>pandas</li><li>NumPy</li><li>Black–Scholes</li><li>Linux</li></ul></dd></div>
+          <div class="result"><dt>Results</dt><dd>A daily Greeks and IV dataset for the full option chain on four markets, plus an automated top-turnover report with built-in validation, posted to trading channels on Slack.</dd></div>
+        </dl>
+      </article>
+      <article class="project">
+        <div>
+          <h3>Stats Generator</h3>
+          <p class="context">Built at AlphaGrep Securities</p>
+          <p class="summary">A plug-in framework that computes daily liquidity, volatility, spread and options statistics for every instrument a strategy might trade.</p>
+          <div class="links"><span class="private">Proprietary — code not public</span></div>
+        </div>
+        <dl class="pdl">
+          <div><dt>Problem</dt><dd>To choose and size instruments, strategy research needs the same daily statistics for everything from Indian index futures and options to US equities, KRX and crypto perpetuals. Each market has its own sessions, holidays and contract details, and these numbers were being worked out one market at a time.</dd></div>
+          <div><dt>Approach</dt><dd>It runs in two stages from a per-exchange JSON config. The first stage pulls 1-minute bars and quotes through the ingestion tool and splits them into per-underlying files for futures, spot and options. The second stage runs a set of indicator plug-ins. Each plug-in declares the data it reads, whether it runs per minute or per day, and how many trading days of history it needs, counted using exchange holiday calendars. Indicators include minute-level implied volatility and Greeks (Black–Scholes); 1-day and 5-day average notional traded (using volume for inverse contracts); volatility of 5-minute and 4-hour returns averaged over 5–10 days, optionally adjusted for overnight gaps and filtered for bad price jumps; average 15-minute volume; and bid-ask spread divided by return volatility, as a measure of trading cost. For Binance and FTX, the list of instruments is built automatically each day from reference data covering every perpetual and USDT spot pair. A scheduled script runs everything for the previous trading day, and a companion script turns strategy P&amp;L, net of slippage, into a pyfolio tear sheet against a benchmark such as NIFTY 50.</dd></div>
+          <div><dt>Technologies</dt><dd><ul class="tags"><li>Python</li><li>pandas</li><li>NumPy</li><li>Black–Scholes</li><li>pyfolio</li><li>Bash</li></ul></dd></div>
+          <div class="result"><dt>Results</dt><dd>A daily, date-partitioned library of statistics across NSE, KRX, US equities and hundreds of crypto perpetuals on Binance and FTX, where a new indicator is one class and a new market is one config file.</dd></div>
+        </dl>
+      </article>
+      <article class="project">
+        <div>
+          <h3>Market Data Ingestion Tool</h3>
+          <p class="context">Built at AlphaGrep Securities</p>
+          <p class="summary">One config-driven tool that turns market data from many exchanges into a single, research-ready format.</p>
+          <div class="links"><span class="private">Proprietary — code not public</span></div>
+        </div>
+        <dl class="pdl">
+          <div><dt>Problem</dt><dd>Researchers needed historical bars and quotes for futures, option chains, equities, index spots, crypto perpetuals and FX from many exchanges, including NSE, BSE, US, CME, KRX, Binance and China. Every source had its own symbology, headers, sessions and holiday calendar, so each new market meant another one-off loader.</dd></div>
+          <div><dt>Approach</dt><dd>A single JSON config lists the exchanges, instruments, option strike ranges and data types to fetch, such as bars, quotes, open interest, trades and funding rates. The tool pulls data through the in-house market data service (which draws on vendors such as Refinitiv and Tardis) or parses raw Algoseek option files, then maps every source onto one bar schema and stores it by ticker and day as zstd-compressed pickles. Each file has matching product and commission info: tick size, multipliers, expiry and strike. It handles most-liquid contract selection and rollovers, holiday calendars, 24/7 crypto markets, half days and overnight sessions. It tracks what has already been downloaded, so a rerun only fetches missing dates or new strikes. It works in daily batches to keep memory bounded, runs in parallel across processes, stops if a source’s schema changes, and reports each run on Slack.</dd></div>
+          <div><dt>Technologies</dt><dd><ul class="tags"><li>Python</li><li>pandas</li><li>multiprocessing</li><li>zstd</li><li>MySQL</li><li>Slack API</li></ul></dd></div>
+          <div class="result"><dt>Results</dt><dd>One consistent, date-partitioned dataset across exchanges and asset classes, where adding a market or extending history is a config change and an incremental rerun.</dd></div>
+        </dl>
+      </article>
+      <article class="project">
+        <div>
+          <h3>Sanity Tool</h3>
+          <p class="context">Built at AlphaGrep Securities</p>
+          <p class="summary">Daily checks that market data was actually downloaded, and that what was downloaded is usable.</p>
+          <div class="links"><span class="private">Proprietary — code not public</span></div>
+        </div>
+        <dl class="pdl">
+          <div><dt>Problem</dt><dd>A missing file or a day of empty bars in the research dataset breaks backtests quietly, and usually isn’t noticed until someone’s results look wrong.</dd></div>
+          <div><dt>Approach</dt><dd>Two checks run after each download. The completeness check confirms a data file exists for every ticker in the config at each bar frequency, compressed or not, handling each exchange’s naming rules. The correctness check opens every file, joins it to its product info, keeps only bars inside that exchange’s trading session (NSE/BSE, KRX, MCX, US, or near 24-hour for crypto), and confirms each option expiry has at least one complete OHLC bar, with stricter all-field checks for NSE equities. Weekends and exchange holidays are skipped. Failures go into a running JSON re-download list by symbol, frequency, date and expiry, which clears itself once the data is fixed, and stale product info for missing files can be removed so the re-download starts clean.</dd></div>
+          <div><dt>Technologies</dt><dd><ul class="tags"><li>Python</li><li>pandas</li><li>zstd</li><li>JSON</li><li>Slack API</li></ul></dd></div>
+          <div class="result"><dt>Results</dt><dd>Missing or broken market data is caught the same day with an exact list of what to re-download, posted to Slack with the full log attached.</dd></div>
+        </dl>
+      </article>
+      <article class="project">
+        <div>
+          <h3>HFT Process Monitoring System</h3>
+          <p class="context">Built at AlphaGrep Securities</p>
+          <p class="summary">Real-time health monitoring for the trading processes running on production servers, with alerts straight to each desk.</p>
+          <div class="links"><span class="private">Proprietary — code not public</span></div>
+        </div>
+        <dl class="pdl">
+          <div><dt>Problem</dt><dd>Strategy, gateway and data processes run on many servers across exchanges. A crash, a missing instance or a duplicate process has to reach the right trader in seconds, and some processes only run on specific days such as expiry days.</dd></div>
+          <div><dt>Approach</dt><dd>A config-driven Python monitor checks every process on local or remote hosts every minute and posts to the desk’s Slack channel only when a state changes, attaching the last 50 lines of the process’s stdout or stderr to the alert. It checks expected process counts, respects exchange holidays, time zones and quiet windows, knows which processes run only on (or around) weekly and monthly expiries, suppresses one-off SSH blips, hot-reloads its JSON config without a restart, and migrates old-format configs automatically.</dd></div>
+          <div><dt>Technologies</dt><dd><ul class="tags"><li>Python</li><li>Linux</li><li>SSH</li><li>Slack API</li><li>JSON config</li></ul></dd></div>
+          <div class="result"><dt>Results</dt><dd>Crashed, missing or duplicated processes are reported within a minute, with the relevant logs attached, and without repeated alerts for the same problem.</dd></div>
+        </dl>
+      </article>
+      <article class="project">
+        <div>
+          <h3>Position Reconciliation System</h3>
+          <p class="context">Built at AlphaGrep Securities</p>
+          <p class="summary">Nightly and on-demand checks that the positions in the trading database match what is actually open at the exchange.</p>
+          <div class="links"><span class="private">Proprietary — code not public</span></div>
+        </div>
+        <dl class="pdl">
+          <div><dt>Problem</dt><dd>Positions recorded in the trading database can drift from the positions open at the exchange, and expired or rolled contracts cause false breaks. Every real break has to be found and fixed before the next session.</dd></div>
+          <div><dt>Approach</dt><dd>Pulls overnight open positions from exchange drop-copy and order-routing logs over SSH and compares them with the MySQL positions, P&amp;L-tracking and target-position tables, symbol by symbol, across NSE, BSE, CME, US, KRX and CFFEX. Expired contracts are filtered out using each exchange’s reference data and symbology (CME month codes, NSE encoded expiries, BSE series), and each mismatch is written out as a ready-to-apply correction record.</dd></div>
+          <div><dt>Technologies</dt><dd><ul class="tags"><li>Python</li><li>MySQL</li><li>pandas</li><li>Paramiko / SSH</li><li>Slack API</li></ul></dd></div>
+          <div class="result"><dt>Results</dt><dd>29% fewer expired-symbol errors and 37% faster data processing, with a per-account report on Slack every day.</dd></div>
+        </dl>
+      </article>
+      <article class="project">
+        <div>
+          <h3>Nurse Scheduling System</h3>
+          <p class="context">Full-stack project, 2026</p>
+          <p class="summary">A web app that matches patient care requests to available nurses with the right skills, and manages shifts end to end.</p>
+          <div class="links"><a href="https://github.com/ankushyadav1979/Nurses_Scheduling_Backend" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>Backend on GitHub</a><a href="https://github.com/ankushyadav1979/Nurses_Scheduling_Frontend" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>Frontend on GitHub</a></div>
+        </div>
+        <dl class="pdl">
+          <div><dt>Problem</dt><dd>Assigning nurses to patient requests by hand is slow and error-prone: every visit needs a nurse who is free and has all the required skills (ICU, ER and so on), and stale requests and finished shifts have to be cleaned up.</dd></div>
+          <div><dt>Approach</dt><dd>A Go REST API (gorilla/mux, GORM, MySQL) with JWT authentication and admin and nurse roles. Background workers assign the oldest pending request for the day to an available nurse with every required skill every 30 seconds, complete finished shifts every 10 minutes and cancel expired requests every hour. Each assignment runs in a single database transaction, and all date logic is time-zone aware. The React and Material UI frontend provides admin and nurse dashboards.</dd></div>
+          <div><dt>Technologies</dt><dd><ul class="tags"><li>Go</li><li>MySQL</li><li>GORM</li><li>JWT</li><li>React</li><li>Material UI</li><li>Docker</li></ul></dd></div>
+          <div class="result"><dt>Results</dt><dd>Requests due today are matched to a qualified nurse within 30 seconds, with no manual steps. Covered by 70+ Go unit and integration tests and 100+ frontend tests (Jest and React Testing Library).</dd></div>
+        </dl>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ QUANT ============================ -->
+<section class="block" id="quant">
+  <div class="wrap">
+    <div class="head">
+      <h2>Quant &amp; research</h2>
+      <p>The mathematics I work with and keep studying. Each area, with the idea at its centre.</p>
+    </div>
+    <div class="quant">
+      <article>
+        <h3>Quantitative finance</h3>
+        <div class="eq"><span class="fr"><span>∂<i>V</i></span><span>∂<i>t</i></span></span> + ½σ²<i>S</i>²<span class="fr"><span>∂²<i>V</i></span><span>∂<i>S</i>²</span></span> + <i>rS</i><span class="fr"><span>∂<i>V</i></span><span>∂<i>S</i></span></span> − <i>rV</i> = 0</div>
+        <p>Derivatives pricing, no-arbitrage and risk-neutral valuation, the Greeks, and portfolio theory.</p>
+      </article>
+      <article>
+        <h3>Probability &amp; statistics</h3>
+        <div class="eq"><i>P</i>(<i>A</i> | <i>B</i>) = <span class="fr"><span><i>P</i>(<i>B</i> | <i>A</i>) <i>P</i>(<i>A</i>)</span><span><i>P</i>(<i>B</i>)</span></span></div>
+        <p>Distributions, estimation, hypothesis testing and Bayesian inference — the base layer under every model.</p>
+      </article>
+      <article>
+        <h3>Stochastic calculus</h3>
+        <div class="eq"><i>df</i> = (<i>f</i><sub><i>t</i></sub> + μ<i>f</i><sub><i>x</i></sub> + ½σ²<i>f</i><sub><i>xx</i></sub>) <i>dt</i> + σ<i>f</i><sub><i>x</i></sub> <i>dW</i></div>
+        <p>Brownian motion, Itô’s lemma, stochastic differential equations and Monte Carlo simulation.</p>
+      </article>
+      <article>
+        <h3>Financial econometrics</h3>
+        <div class="eq">σ²<sub><i>t</i></sub> = ω + α ε²<sub><i>t</i>−1</sub> + β σ²<sub><i>t</i>−1</sub></div>
+        <p>Time-series models, volatility modelling with ARCH/GARCH, cointegration and regression on market data.</p>
+      </article>
+      <article>
+        <h3>Algorithmic trading</h3>
+        <div class="eq">Sharpe = <span class="fr"><span>E[<i>R</i><sub><i>p</i></sub> − <i>R</i><sub><i>f</i></sub>&thinsp;]</span><span>σ<sub><i>p</i></sub></span></span></div>
+        <p>Market microstructure, execution, signal research, backtesting without look-ahead bias, and risk management.</p>
+      </article>
+      <article>
+        <h3>ML for finance</h3>
+        <div class="eq">θ* = arg min<sub>θ</sub> E[ ℓ(<i>y</i>, <i>f</i><sub>θ</sub>(<i>x</i>)) ]</div>
+        <p>Feature engineering on noisy financial data, walk-forward validation, and guarding against overfitting.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ SKILLS ============================ -->
+<section class="block" id="skills">
+  <div class="wrap">
+    <div class="head">
+      <h2>Technical skills</h2>
+      <p>Tools I use to design, build and ship.</p>
+    </div>
+    <div class="skills">
+      <div>
+        <h3>Languages</h3>
+        <ul>
+          <li>C / C++ <span>trading systems, market data</span></li>
+          <li>Python <span>automation, data, research</span></li>
+          <li>Java <span>services, JUnit</span></li>
+          <li>TypeScript / JavaScript <span>CDK, React, Node.js</span></li>
+          <li>Go <span>services</span></li>
+          <li>SQL <span>MySQL</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Cloud &amp; infrastructure</h3>
+        <ul>
+          <li>AWS <span>CDK, Fargate, CloudWatch, IAM</span></li>
+          <li>Google Cloud Platform</li>
+          <li>Linux <span>production, automation</span></li>
+          <li>Docker / Kubernetes <span>containers</span></li>
+          <li>Terraform / Ansible <span>infrastructure as code</span></li>
+          <li>Git / Jenkins <span>CI/CD</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Foundations</h3>
+        <ul>
+          <li>Algorithms &amp; data structures</li>
+          <li>Distributed systems</li>
+          <li>Low-latency design</li>
+          <li>Database systems</li>
+          <li>Quantitative finance</li>
+          <li>Data analysis <span>pandas, NumPy, Matplotlib</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ EDUCATION ============================ -->
+<section class="block" id="education">
+  <div class="wrap">
+    <div class="head">
+      <h2>Education</h2>
+    </div>
+    <div class="edu">
+      <article>
+        <h3>University of Waterloo</h3>
+        <p class="deg">MEng, Electrical &amp; Computer Engineering (Co-op)</p>
+        <p class="yrs">Sep 2025 – Dec 2026 · Waterloo, Ontario</p>
+        <p class="grade">Cumulative average <strong>84.0%</strong> · Software specialization</p>
+        <h4>Coursework</h4>
+        <ul class="courses">
+          <li><span>ECE 606</span> Algorithm Design and Analysis</li>
+          <li><span>ECE 655</span> Protocols, Software and Issues in Mobile Systems</li>
+          <li><span>ECE 650</span> Methods and Tools for Software Engineering</li>
+          <li><span>ECE 651</span> Foundations of Software Engineering</li>
+          <li><span>ECE 653</span> Software Testing, Quality Assurance and Maintenance</li>
+          <li><span>BE 601</span> Financial and Managerial Accounting</li>
+          <li><span>BE 602</span> Data Analysis and Management</li>
+        </ul>
+      </article>
+      <article>
+        <h3>Rajasthan Technical University</h3>
+        <p class="deg">BTech, Computer Science &amp; Engineering</p>
+        <p class="yrs">2019 – 2023 · Poornima College of Engineering, Jaipur</p>
+        <p class="grade">CGPA <strong>8.93 / 10</strong> · First Division with Distinction</p>
+        <h4>Coursework</h4>
+        <ul class="courses">
+          <li>Data Structures and Algorithms</li>
+          <li>Analysis of Algorithms</li>
+          <li>Operating Systems</li>
+          <li>Database Management Systems</li>
+          <li>Computer Networks</li>
+          <li>Compiler Design</li>
+          <li>Theory of Computation</li>
+          <li>Machine Learning</li>
+          <li>Big Data Analytics</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CONTACT ============================ -->
+<section class="block" id="contact">
+  <div class="wrap">
+    <div class="head">
+      <h2>Contact</h2>
+      <p>Graduating December 2026 and open to software engineering and quant developer roles. The fastest way to reach me is email.</p>
+    </div>
+    <div class="body-grid">
+      <div class="spacer"></div>
+      <div>
+        <a class="contact-mail" href="mailto:a8yadav@uwaterloo.ca">a8yadav@uwaterloo.ca</a>
+        <div class="contact-links">
+          <a class="btn primary" href="resume.pdf" target="_blank" rel="noopener">View resume</a>
+          <a class="btn" href="https://github.com/ankushyadav1979" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="https://www.linkedin.com/in/ankushyadav1979" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Ankush Yadav</span>
+    <span>Waterloo, Ontario</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  /* ---------- Theme toggle ---------- */
+  const root = document.documentElement;
+  const saved = (() => { try { return localStorage.getItem('theme'); } catch { return null; } })();
+  if (saved) root.dataset.theme = saved;
+  document.getElementById('theme').addEventListener('click', () => {
+    const dark = root.dataset.theme
+      ? root.dataset.theme === 'dark'
+      : matchMedia('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = dark ? 'light' : 'dark';
+    try { localStorage.setItem('theme', root.dataset.theme); } catch {}
+    draw(true);
+  });
+
+  /* ---------- Mobile menu ---------- */
+  const menu = document.getElementById('menu'), menuBtn = document.getElementById('menuBtn');
+  menuBtn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+  });
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    menu.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false');
+  }));
+
+  /* ---------- Nav border + active link ---------- */
+  const nav = document.getElementById('nav');
+  addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 8), { passive: true });
+  const links = [...menu.querySelectorAll('a')];
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  document.querySelectorAll('main section[id]').forEach(s => io.observe(s));
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ---------- Hero: geometric Brownian motion paths ---------- */
+  const canvas = document.getElementById('gbm');
+  const ctx = canvas.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const N_PATHS = 36, STEPS = 240, MU = 0.06, SIGMA = 0.28, T = 1;
+  let paths = [], hero = 0, raf = 0, seed = 7;
+
+  function rand() { // mulberry32
+    seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+    let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  }
+  function normal() { let u = 0, v = 0; while (!u) u = rand(); while (!v) v = rand(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+
+  function simulate() {
+    const dt = T / STEPS;
+    paths = Array.from({ length: N_PATHS }, () => {
+      const p = [100]; let s = 100;
+      for (let i = 0; i < STEPS; i++) { s *= Math.exp((MU - SIGMA * SIGMA / 2) * dt + SIGMA * Math.sqrt(dt) * normal()); p.push(s); }
+      return p;
+    });
+    // highlight the median terminal path
+    const order = paths.map((p, i) => [p[STEPS], i]).sort((a, b) => a[0] - b[0]);
+    hero = order[Math.floor(order.length * 0.8)][1];
+  }
+
+  function css(name) { return getComputedStyle(root).getPropertyValue(name).trim(); }
+
+  function draw(instant) {
+    cancelAnimationFrame(raf);
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    let lo = Infinity, hi = -Infinity;
+    paths.forEach(p => p.forEach(v => { if (v < lo) lo = v; if (v > hi) hi = v; }));
+    const pad = { l: 38, r: 8, t: 8, b: 20 };
+    const x = i => pad.l + (i / STEPS) * (w - pad.l - pad.r);
+    const y = v => pad.t + (1 - (Math.log(v) - Math.log(lo)) / (Math.log(hi) - Math.log(lo))) * (h - pad.t - pad.b);
+
+    const colPath = css('--path'), colAccent = css('--accent'), colRule = css('--rule'), colMuted = css('--ink-3'), colDown = css('--down');
+
+    function frame(k) {
+      ctx.clearRect(0, 0, w, h);
+      // grid
+      ctx.strokeStyle = colRule; ctx.lineWidth = 1; ctx.fillStyle = colMuted;
+      ctx.font = '11px "IBM Plex Mono", monospace'; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+      const ticks = [lo, Math.sqrt(lo * 100), 100, Math.sqrt(hi * 100), hi];
+      ticks.forEach(t => {
+        const yy = Math.round(y(t)) + .5;
+        ctx.beginPath(); ctx.setLineDash(t === 100 ? [] : [2, 4]); ctx.moveTo(pad.l, yy); ctx.lineTo(w - pad.r, yy); ctx.stroke();
+        ctx.fillText(t.toFixed(0), pad.l - 6, yy);
+      });
+      ctx.setLineDash([]);
+      ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+      ctx.fillText('t = 0', pad.l, h - 4);
+      ctx.textAlign = 'right'; ctx.fillText('t = 1y', w - pad.r, h - 4);
+
+      const upto = Math.max(1, Math.floor(k));
+      // background paths
+      ctx.lineWidth = 1; ctx.strokeStyle = colPath; ctx.lineJoin = 'round';
+      paths.forEach((p, idx) => {
+        if (idx === hero) return;
+        ctx.beginPath(); ctx.moveTo(x(0), y(p[0]));
+        for (let i = 1; i <= upto; i++) ctx.lineTo(x(i), y(p[i]));
+        ctx.stroke();
+      });
+      // highlighted path
+      const p = paths[hero];
+      ctx.lineWidth = 2.2; ctx.strokeStyle = colAccent;
+      ctx.beginPath(); ctx.moveTo(x(0), y(p[0]));
+      for (let i = 1; i <= upto; i++) ctx.lineTo(x(i), y(p[i]));
+      ctx.stroke();
+      // head marker + value
+      const hx = x(upto), hy = y(p[upto]);
+      ctx.fillStyle = colAccent; ctx.beginPath(); ctx.arc(hx, hy, 4, 0, Math.PI * 2); ctx.fill();
+      const val = p[upto], chg = (val / 100 - 1) * 100;
+      ctx.font = '500 12px "IBM Plex Mono", monospace';
+      ctx.fillStyle = chg >= 0 ? colAccent : colDown;
+      const label = (chg >= 0 ? '+' : '') + chg.toFixed(1) + '%';
+      ctx.textAlign = hx > w - 70 ? 'right' : 'left';
+      ctx.fillText(label, hx + (ctx.textAlign === 'right' ? -10 : 10), hy - 10);
+    }
+
+    if (instant || reduce) { frame(STEPS); return; }
+    const start = performance.now(), dur = 2200;
+    const tick = now => {
+      const t = Math.min(1, (now - start) / dur);
+      const e = 1 - Math.pow(1 - t, 3);
+      frame(e * STEPS);
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+  }
+
+  simulate();
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => draw(false));
+  document.getElementById('replay').addEventListener('click', () => { seed = (Math.random() * 1e9) | 0; simulate(); draw(false); });
+  let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => draw(true), 120); });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => draw(true));
+})();
+</script>
+</body>
+</html>
